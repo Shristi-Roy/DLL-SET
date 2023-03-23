@@ -1,0 +1,103 @@
+class Node{
+    constructor(val){
+        this.data = val;
+        this.next = null;
+        this.prev = null;
+    }
+}
+class Doublylinkedlist{
+    constructor(){
+        this.head = null
+        this.tail = null
+        this.length = 0
+    }
+     push(val){
+        var newNode = new Node(val)
+        if(this.length === 0){
+            this.head = newNode
+            this.tail = newNode
+        } else{
+            this.tail.next = newNode;
+            newNode.prev = this.tail;
+            this.tail = newNode
+        }
+        this.length = this.length + 1
+        return this.length
+    }
+    pop(){
+        if(!this.head){
+            return "No Node Available"
+        }
+         var poppedNode = this.tail 
+        if(this.length === 1){
+            this.head = null
+            this.tail = null
+        }else{
+            this.tail = poppedNode.prev
+            this.tail.next = null
+            poppedNode.prev =null
+        }
+        this.length = this.length - 1
+        return poppedNode
+    }
+    shift(){
+        if(this.length === 0){
+            return "No Node Available"
+        }
+        var oldHead = this.head 
+        if(this.length === 1){
+            this.head = null
+            this.tail = null
+        }else{
+            this.head = oldHead.next
+            this.head.prev = null
+            oldHead.next = null
+        }
+        this.length = this.length - 1
+        return oldHead
+    }
+    unshift(val){
+        var newNode = new Node(val)
+        if(this.length === 0){
+            this.head = null
+            this.tail = null
+        }else{
+            this.head.prev = newNode;
+            newNode.next = this.head;
+            this.head = newNode;
+        }
+        this.length = this.length + 1
+        return this.length
+    }
+    get(index){
+        if(index < 0 || index >= this.length) return null
+        var count, current
+        if(index <= this.length/2){
+            console.log("WORKING FROM START")
+            count = 0;
+            current = this.head;
+            while(count !== index){
+                current = current.next;
+                count++;
+            }
+        }else{
+            console.log("WORKING FROM END")
+            count = this.length - 1
+            current = this.tail 
+            while(count !== index){
+                current = current.prev;
+                count--;
+            }
+        }
+        return current
+    }
+    set(index, val){
+        var foundNode = this.get(index);
+        if(foundNode != null){
+            foundNode.val = val;
+            return true;
+        }
+        return false;
+    }
+}
+const ar = new Doublylinkedlist()
